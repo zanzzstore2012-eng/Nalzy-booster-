@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOSTER NALZY - Game Space</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #080305;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Mobile Container Simulation */
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            background: #0d0608;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-y: auto;
+            border: 1px solid #2d0e15;
+            box-shadow: 0 0 30px rgba(230, 25, 75, 0.2);
+        }
+
+        /* Header Top */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #0d0608;
+        }
+
+        .top-bar h2 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .user-id-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: #8c8c8c;
+        }
+
+        .badge-id {
+            background: #1a080c;
+            color: #ff3355;
+            border: 1px solid #4a101d;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        /* Banner Card */
+        .hero-banner {
+            margin: 10px 20px;
+            background: linear-gradient(135deg, #1c060b 0%, #080305 100%);
+            border: 1px solid #3d0c17;
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            color: #8c8c8c;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .hero-brand {
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
+            letter-spacing: 1px;
+        }
+
+        .hero-ver {
+            font-size: 10px;
+            color: #ff3355;
+            margin-bottom: 15px;
+        }
+
+        .hero-logo-bg {
+            position: absolute;
+            right: -10px;
+            top: 10px;
+            opacity: 0.15;
+            font-size: 110px;
+            color: #ff0033;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+        }
+
+        .stat-item span {
+            display: block;
+            color: #7a7a7a;
+            font-size: 10px;
+        }
+
+        .stat-item strong {
+            font-size: 15px;
+            color: #fff;
+        }
+
+        .energy-btn {
+            background: #1f070d;
+            border: 1px solid #e6194b;
+            color: #ff3355;
+            padding: 2px 6px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        /* Game Space Launcher Tag */
+        .game-space-tag {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            background: linear-gradient(90deg, #ff0044, #990026);
+            padding: 8px 14px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(255, 0, 68, 0.4);
+            cursor: pointer;
+        }
+
+        /* Section Headings */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #8c8c8c;
+            letter-spacing: 1px;
+        }
+
+        .add-game-btn {
+            color: #ff3355;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* Game List Cards */
+        .game-list {
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .game-card {
+            background: #14080b;
+            border: 1px solid #280e15;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .game-card:hover {
+            border-color: #ff0044;
+        }
+
+        .game-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .game-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: #2b0b12;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            color: #ff3355;
+            border: 1px solid #4d101e;
+        }
+
+        .game-details h4 {
+            font-size: 15px;
+            color: #fff;
+        }
+
+        .game-details p {
+            font-size: 11px;
+            color: #7a7a7a;
+        }
+
+        .btn-launch {
+            background: linear-gradient(90deg, #ff0044, #cc0036);
+            border: none;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255,0,68,0.3);
+        }
+
+        /* Navigation Bar Bottom */
+        .bottom-nav {
+            margin-top: auto;
+            background: #080305;
+            border-top: 1px solid #1f090e;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+        }
+
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #5a5a5a;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 33%;
+        }
+
+        .nav-btn.active {
+            color: #ff3355;
+        }
+
+        .nav-btn i {
+            font-size: 18px;
+        }
+
+        /* Views (Pages) */
+        .tab-page {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .tab-page.active {
+            display: flex;
+        }
+
+        /* GAME LABS TOOL PANEL */
+        .lab-item {
+            background: #14080b;
+            border: 1px solid #280e15;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 0 20px 12px;
+        }
+
+        .lab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .lab-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute; cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #2b0b12;
+            transition: .3s;
+            border-radius: 22px;
+            border: 1px solid #4d101e;
+        }
+
+        .slider:before {
+            position: absolute; content: "";
+            height: 14px; width: 14px;
+            left: 3px; bottom: 3px;
+            background-color: #8c8c8c;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: #ff0044; border-color: #ff0044;}
+        input:checked + .slider:before { transform: translateX(18px); background-color: #fff; }
+
+        .lab-desc {
+            font-size: 11px;
+            color: #7a7a7a;
+        }
+
+        /* OVERLAY HUD (SIMULASI GAME RUNNING) */
+        .game-overlay-screen {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100vw; height:100vh;
+            background: #000;
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hud-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(15, 5, 8, 0.85);
+            border: 1px solid #ff0044;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 11px;
+            color: #00ffcc;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 0 15px rgba(255,0,68,0.3);
+        }
+
+        /* VIRTUAL CROSSHAIR */
+        #crosshair-hud {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            pointer-events: none;
+        }
+
+        .crosshair-line {
+            position: absolute;
+            background: #00ffcc;
+            box-shadow: 0 0 8px #00ffcc;
+        }
+
+        .ch-vert { width: 2px; height: 20px; top: -10px; left: -1px; }
+        .ch-hori { width: 20px; height: 2px; top: -1px; left: -10px; }
+        .ch-dot { width: 6px; height: 6px; background: #ff0044; border-radius: 50%; top: -3px; left: -3px; }
+
+        .close-game-btn {
+            position: absolute;
+            bottom: 30px;
+            background: rgba(255, 0, 68, 0.8);
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- TAB 1: HOME -->
+        <div id="page-home" class="tab-page active">
+            <div class="top-bar">
+                <h2>Home</h2>
+                <div class="user-id-box">
+                    By FahrezONE <span class="badge-id">ID 50a609a4</span>
+                </div>
+            </div>
+
+            <!-- Hero Banner -->
+            <div class="hero-banner">
+                <i class="fa-solid fa-gamepad hero-logo-bg"></i>
+                <div class="hero-title">GAME</div>
+                <div class="hero-brand">BOOSTER NALZY</div>
+                <div class="hero-ver">V1.3.1-13160</div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span>Batas Koleksi</span>
+                        <strong id="game-count">2/10</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Energi / Cache Clean</span>
+                        <strong><span id="energy-val">130</span>/600 <button class="energy-btn" onclick="boostEnergy()"><i class="fa-solid fa-bolt"></i></button></strong>
+                    </div>
+                </div>
+
+                <div class="game-space-tag" onclick="launchGame('Free Fire')">
+                    <i class="fa-solid fa-rocket"></i> Game Space
+                </div>
+            </div>
+
+            <!-- Recently Played -->
+            <div class="section-header">
+                RECENTLY PLAYED
+            </div>
+            <div class="game-list">
+                <div class="game-card">
+                    <div class="game-info">
+                        <div class="game-icon"><i class="fa-solid fa-gun"></i></div>
+                        <div class="game-details">
+                            <h4>Strike Ops</h4>
+                            <p>Waktu Bermain: 1j 41m</p>
+                        </div>
+                    </div>
+                    <button class="btn-launch" onclick="launchGame('Strike Ops')">MAIN</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-info">
+                        <div class="game-icon" style="color: #ff9900;"><i class="fa-solid fa-fire"></i></div>
+                        <div class="game-details">
+                            <h4>Free Fire</h4>
+                            <p>Waktu Bermain: 7m</p>
+                        </div>
+                    </div>
+                    <button class="btn-launch" onclick="launchGame('Free Fire')">MAIN</button>
+                </div>
+            </div>
+
+            <!-- Game Library -->
+            <div class="section-header">
+                PERPUSTAKAAN GAME
+                <span class="add-game-btn" onclick="addNewGame()"><i class="fa-solid fa-plus"></i> Tambah Game</span>
+            </div>
+            <div class="game-list" id="library-list">
+                <div class="game-card">
+                    <div class="game-info">
+                        <div class="game-icon" style="color: #ff9900;"><i class="fa-solid fa-fire"></i></div>
+                        <div class="game-details">
+                            <h4>Free Fire</h4>
+                            <p>Waktu Bermain: 24j 7m</p>
+                        </div>
+                    </div>
+                    <button class="btn-launch" onclick="launchGame('Free Fire')">MAIN</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: GAME LABS -->
+        <div id="page-labs" class="tab-page">
+            <div class="top-bar">
+                <h2>Game-Labs</h2>
+                <div class="user-id-box"><span class="badge-id">NALZY ENGINE</span></div>
+            </div>
+
+            <div class="lab-item">
+                <div class="lab-header">
+                    <div class="lab-title">Crosshair Custom</div>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-crosshair" onchange="toggleCrosshair(this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="lab-desc">Tampilkan titik acuan presisi di tengah layar saat bermain game FPS.</div>
+            </div>
+
+            <div class="lab-item">
+                <div class="lab-header">
+                    <div class="lab-title">Monitor Sesi Real-Time</div>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-hud" checked onchange="toggleHUD(this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="lab-desc">Pantau FPS, Suhu CPU, dan Latensi Ping secara real-time saat game berjalan.</div>
+            </div>
+
+            <div class="lab-item">
+                <div class="lab-header">
+                    <div class="lab-title">Kalibrasi Gyro Auto</div>
+                    <label class="switch">
+                        <input type="checkbox" onchange="alert('Sensor Gyroscope Berhasil Dikalibrasi!')">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="lab-desc">Optimalkan sensitivitas dan respons giroskop untuk meminimalkan delay.</div>
+            </div>
+        </div>
+
+        <!-- TAB 3: PROFILE / SYSTEM -->
+        <div id="page-profile" class="tab-page">
+            <div class="top-bar">
+                <h2>Profile System</h2>
+            </div>
+            <div class="lab-item">
+                <div class="lab-title">Spesifikasi Perangkat</div>
+                <div class="lab-desc" style="margin-top:8px;">
+                    • CPU: Octa-Core 2.80 GHz<br>
+                    • Total RAM: 8.0 GB<br>
+                    • Arsitektur: arm64-v8a<br>
+                    • Status Booster: <span style="color:#00ffcc;">AKTIF</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="bottom-nav">
+            <div class="nav-btn active" onclick="switchTab('home', this)">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-btn" onclick="switchTab('labs', this)">
+                <i class="fa-solid fa-vial"></i>
+                <span>Game-Labs</span>
+            </div>
+            <div class="nav-btn" onclick="switchTab('profile', this)">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY HUD MONITOR -->
+    <div class="hud-overlay" id="hud-monitor">
+        <div>FPS: <span id="fps-val">60</span></div>
+        <div>PING: <span id="ping-val">24</span>ms</div>
+        <div>TEMP: <span id="temp-val">36.5</span>°C</div>
+    </div>
+
+    <!-- VIRTUAL CROSSHAIR -->
+    <div id="crosshair-hud">
+        <div class="crosshair-line ch-vert"></div>
+        <div class="crosshair-line ch-hori"></div>
+        <div class="crosshair-line ch-dot"></div>
+    </div>
+
+    <!-- GAME OVERLAY SCREEN (SIMULATION) -->
+    <div class="game-overlay-screen" id="gameScreen">
+        <h2 style="color: #ff0044; margin-bottom: 10px;" id="playingGameTitle">RUNNING GAME...</h2>
+        <p style="color: #7a7a7a; font-size: 12px; margin-bottom: 20px;">BOOSTER NALZY ACTIVE IN BACKGROUND</p>
+        <button class="close-game-btn" onclick="exitGame()">KELUAR DARI GAME</button>
+    </div>
+
+    <script>
+        // Navigation Handler
+        function switchTab(tabName, btn) {
+            document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById('page-' + tabName).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // Energy Boost Handler
+        function boostEnergy() {
+            let energyEl = document.getElementById('energy-val');
+            let current = parseInt(energyEl.innerText);
+            if(current < 600) {
+                energyEl.innerText = Math.min(600, current + 150);
+                alert("RAM & Cache Berhasil Dibersihkan! Energi bertambah.");
+            } else {
+                alert("Energi sudah maksimal!");
+            }
+        }
+
+        // Add Game Handler
+        function addNewGame() {
+            let gameName = prompt("Masukkan Nama Game:");
+            if(gameName) {
+                let library = document.getElementById('library-list');
+                let card = document.createElement('div');
+                card.className = 'game-card';
+                card.innerHTML = `
+                    <div class="game-info">
+                        <div class="game-icon" style="color:#00ffcc;"><i class="fa-solid fa-gamepad"></i></div>
+                        <div class="game-details">
+                            <h4>${gameName}</h4>
+                            <p>Baru Ditambahkan</p>
+                        </div>
+                    </div>
+                    <button class="btn-launch" onclick="launchGame('${gameName}')">MAIN</button>
+                `;
+                library.appendChild(card);
+            }
+        }
+
+        // Crosshair Toggle
+        function toggleCrosshair(checkbox) {
+            let ch = document.getElementById('crosshair-hud');
+            ch.style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+        // HUD Monitor Toggle
+        function toggleHUD(checkbox) {
+            let hud = document.getElementById('hud-monitor');
+            hud.style.display = checkbox.checked ? 'flex' : 'none';
+        }
+
+        // Live Real-Time FPS / Ping Simulation
+        setInterval(() => {
+            document.getElementById('fps-val').innerText = Math.floor(Math.random() * 5) + 58;
+            document.getElementById('ping-val').innerText = Math.floor(Math.random() * 10) + 20;
+            document.getElementById('temp-val').innerText = (36 + Math.random()).toFixed(1);
+        }, 1500);
+
+        // Game Launch Simulation
+        function launchGame(title) {
+            document.getElementById('playingGameTitle').innerText = "MEMBAWA " + title.toUpperCase() + "...";
+            document.getElementById('gameScreen').style.display = 'flex';
+        }
+
+        function exitGame() {
+            document.getElementById('gameScreen').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
